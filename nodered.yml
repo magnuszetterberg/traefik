@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nodered.rule=Host(`nodered.localhost`)"
+      - "traefik.http.services.nodered.loadbalancer.server.port=1880"
+#      - "traefik.http.routers.nodered.tls.certresolver=staging"
+networks:
+  traefik:
+    external: true

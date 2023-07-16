@@ -10,7 +10,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.nodered.rule=Host(`nodered.localhost`)"
       - "traefik.http.services.nodered.loadbalancer.server.port=1880"
-#      - "traefik.http.routers.nodered.tls.certresolver=staging"
 networks:
   traefik:
     external: true

@@ -2,16 +2,23 @@ version: "3"
 services:
 
   traefik:
-    image: traefik:latest
+    # The official v2 Traefik docker image
+    image: traefik:v2.10
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
     ports:
-      - 443:443
-      - 80:80
-    #dashboard
-      - 8080:8080
+      # The HTTP port
+      - "80:80"
+      # The https port
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
     volumes:
+      # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.yml:/etc/traefik/traefik.yml
-      - ./traefik/ssl/:/ssl-certs/
+      #- ./traefik.yml:/etc/traefik/traefik.yml
+      # - ./traefik/ssl/:/ssl-certs/
+
     networks:
       - traefik
 

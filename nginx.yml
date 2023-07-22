@@ -6,7 +6,10 @@ services:
       - "traefik"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.nginx.entrypoints=web, websecure"
       - "traefik.http.routers.nginx.rule=Host(`nginx.localhost`)"
+      - "traefik.http.routers.nginx.tls=true"
+      - "traefik.http.routers.nginx.tls.certresolver=staging"
 networks:
   traefik:
     external: true

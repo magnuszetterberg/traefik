@@ -6,3 +6,7 @@ just change the email address in traefik.yml file, create a docker network calle
 
 Then you can simply use the nginx.yml compose file to setup a normal nginx example behind the traefik container for testing, and then copy/paste the label values 
 and network settings from the nginx.yml file into you own docker-compose.to have the container being served behind the traefik container
+
+
+Used Christian Lempas boilerplate setup for traefik to get this working availble here
+https://github.com/ChristianLempa/boilerplates/tree/main/docker-compose/traefik

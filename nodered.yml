@@ -6,12 +6,16 @@ services:
       - TZ=Europe/Amsterdam
     networks:
       - traefik
+    # echo $(htpasswd -nb my_user my_password) | sed -e s/\\$/\\$\\$/g
     labels:
+      - "traefik.http.middlewares.auth.basicauth.users=change_username:create_passwordhash"
       - "traefik.enable=true"
       - "traefik.http.routers.nodered.entrypoints=web, websecure"
-      - "traefik.http.routers.nodered.rule=Host(`nodered.localhost`)"
+      - "traefik.http.routers.nodered.rule=Host(`nodered.zaeta.se`)"
       - "traefik.http.routers.nodered.tls=true"
       - "traefik.http.routers.nodered.tls.certresolver=staging"
+      - "traefik.http.routers.nodered.middlewares=auth" # Link the auth middleware here
 networks:
   traefik:
     external: true
+

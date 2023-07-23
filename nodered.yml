@@ -8,7 +8,7 @@ services:
       - traefik
     # echo $(htpasswd -nb my_user my_password) | sed -e s/\\$/\\$\\$/g
     labels:
-      - "traefik.http.middlewares.auth.basicauth.users=change_username:create_passwordhash"
+      - "traefik.http.middlewares.auth.basicauth.users=my_user:my_password"
       - "traefik.enable=true"
       - "traefik.http.routers.nodered.entrypoints=web, websecure"
       - "traefik.http.routers.nodered.rule=Host(`nodered.zaeta.se`)"

@@ -8,8 +8,6 @@ services:
       - traefik
     #the first example escapes the generated password, and add another $ since that is according to the documentation needed...   
     # echo $(htpasswd -nb my_user my_password) | sed -e s/\\$/\\$\\$/g
-    #but when i tried that, it did not work.. så I removed the sed option below to NOT escape the hashed password...  and got it working like that..  strange
-    # echo $(htpasswd -nb my_user my_password)
     labels:
       - "traefik.http.middlewares.auth.basicauth.users=my_user:my_password"
       - "traefik.enable=true"
@@ -18,6 +16,7 @@ services:
       - "traefik.http.routers.nodered.tls=true"
       - "traefik.http.routers.nodered.tls.certresolver=staging"
       - "traefik.http.routers.nodered.middlewares=auth" # Link the auth middleware here
+      
 networks:
   traefik:
     external: true

@@ -1,0 +1,27 @@
+version: "3"
+services:
+  emulatorjs:
+    image: lscr.io/linuxserver/emulatorjs:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+    volumes:
+      - ./config:/config
+      - ./data:/data
+    restart: unless-stopped
+    networks:
+      - "traefik"
+    # generate basic auth 
+    # echo $(htpasswd -nb my_user my_password) | sed -e s/\\$/\\$\\$/g
+    labels:
+      - "traefik.http.middlewares.auth.basicauth.users=<user>:<password>#    container_name: emulatorjs"
+      - "traefik.enable=true"
+      - "traefik.http.routers.emulatorjs.entrypoints=web, websecure"
+      - "traefik.http.routers.emulatorjs.rule=Host(`<add domain here>`)"
+      - "traefik.http.routers.emulatorjs.tls=true"
+      - "traefik.http.routers.emulatorjs.tls.certresolver=production"
+      - "traefik.http.routers.emulatorjs.middlewares=auth" # Link the auth middleware here
+networks:
+  traefik:
+    external: true

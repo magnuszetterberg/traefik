@@ -1,0 +1,39 @@
+version: "3"
+services:
+  nginx:
+    image: bluenviron/mediamtx:latest
+    networks:
+      - "traefik"
+    ports:
+      - 1935:1935
+      - 8888:8888
+      - 8554:8554
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mediamtx.entrypoints=web, websecure"
+      - "traefik.http.routers.mediamtx.rule=Host(`video.zaeta.se`)"
+      - "traefik.http.routers.mediamtx.tls=true"
+      - "traefik.http.routers.mediamtx.tls.certresolver=production"
+      - "traefik.http.services.mediamtx.loadbalancer.server.port=8889"
+
+      - "traefik.tcp.routers.rtmp.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.rtmp.entrypoints=rtmp"
+      - "traefik.tcp.routers.rtmp.service=mediamtx-rtmp"
+      - "traefik.tcp.services.mediamtx-rtmp.loadbalancer.server.port=1935"
+
+      - "traefik.tcp.routers.hls.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.hls.entrypoints=hls"
+      - "traefik.tcp.routers.hls.service=mediamtx-hls"
+      - "traefik.tcp.services.mediamtx-hls.loadbalancer.server.port=8888"
+
+      - "traefik.tcp.routers.rtsp.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.rtsp.entrypoints=rtsp"
+      - "traefik.tcp.routers.rtsp.service=mediamtx-rtsp"
+      - "traefik.tcp.services.mediamtx-rtsp.loadbalancer.server.port=8554"
+
+
+networks:
+  traefik:
+    external: true

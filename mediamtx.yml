@@ -13,7 +13,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.mediamtx.entrypoints=web, websecure"
-      - "traefik.http.routers.mediamtx.rule=Host(`video.zaeta.se`)"
+      - "traefik.http.routers.mediamtx.rule=Host(`foo.bar`)"
       - "traefik.http.routers.mediamtx.tls=true"
       - "traefik.http.routers.mediamtx.tls.certresolver=production"
       - "traefik.http.services.mediamtx.loadbalancer.server.port=8889"

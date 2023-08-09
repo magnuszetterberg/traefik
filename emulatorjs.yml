@@ -15,7 +15,7 @@ services:
     # generate basic auth 
     # echo $(htpasswd -nb my_user my_password) | sed -e s/\\$/\\$\\$/g
     labels:
-      - "traefik.http.middlewares.auth.basicauth.users=<user>:<password>#    container_name: emulatorjs"
+      - "traefik.http.middlewares.auth.basicauth.users=<user>:<password>
       - "traefik.enable=true"
       - "traefik.http.routers.emulatorjs.entrypoints=web, websecure"
       - "traefik.http.routers.emulatorjs.rule=Host(`<add domain here>`)"

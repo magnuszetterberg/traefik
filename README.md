@@ -1,4 +1,4 @@
-# traefik
+# traefik and misc docker-compose files to run behind it
 
 Simple skeleton setup for using traefik as proxy infront your normal docker-containers. 
 

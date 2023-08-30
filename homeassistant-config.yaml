@@ -3,18 +3,6 @@ http:
   trusted_proxies:
     - <add your docker IP subnet here with /24>
 
-binary_sensor:
-  - platform: ffmpeg_motion
-    name: Set_Name_Here
-    input: -rtsp_transport tcp -i rtsp://admin:<password@<ip address>:554/live/profile.0/video
-
-#camera:
-#  - platform: ffmpeg
-#    name: Set_Name_Here
-#    input: -rtsp_transport tcp -i rtsp://admin:<password@<ip address>:554/live/profile.0/video
-
-
-
 
 # Loads default set of integrations. Do not remove.
 default_config:

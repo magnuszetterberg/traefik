@@ -2,45 +2,27 @@ version: "3"
 services:
   mealie:
     container_name: mealie
-    image: hkotel/mealie:latest
+    image: ghcr.io/mealie-recipes/mealie:nightly
     restart: always
-    ports:
-      - 9925:80
-      environment:
-        ALLOW_SIGNUP: "false"
-
-        DB_ENGINE: sqlite # Optional: 'sqlite', 'postgres'
-        # =====================================
-        # Postgres Config
-        POSTGRES_USER: mealie
-        POSTGRES_PASSWORD: mealie
-        POSTGRES_SERVER: postgres
-        POSTGRES_PORT: 5432
-        POSTGRES_DB: mealie
-
-        # =====================================
-        # Web Concurrency
-        WEB_GUNICORN: "false"
-        WORKERS_PER_CORE: 0.5
-        MAX_WORKERS: 1
-        WEB_CONCURRENCY: 1
-        # =====================================
-        # Email Configuration
-        # SMTP_HOST=
-        # SMTP_PORT=587
-        # SMTP_FROM_NAME=Mealie
-        # SMTP_AUTH_STRATEGY=TLS # Options: 'TLS', 'SSL', 'NONE'
-        # SMTP_FROM_EMAIL=
-        # SMTP_USER=
-        # SMTP_PASSWORD=
+    networks:
+      - traefik
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=<set baseURL here>
     labels:
-      - "traefik.http.middlewares.auth.basicauth.users=<user>:<password>
+    #  - "traefik.http.middlewares.auth.basicauth.users=<user>:<password>
       - "traefik.enable=true"
       - "traefik.http.routers.mealie.entrypoints=web, websecure"
-      - "traefik.http.routers.mealie.rule=Host(`<add domain here>`)"
+      - "traefik.http.routers.mealie.rule=Host(`<set domain address here>`)"
       - "traefik.http.routers.mealie.tls=true"
       - "traefik.http.routers.mealie.tls.certresolver=production"
-      - "traefik.http.routers.mealie.middlewares=auth" # Link the auth middleware here
+    #  - "traefik.http.routers.mealie.middlewares=auth" # Link the auth middleware here
 networks:
   traefik:
     external: true

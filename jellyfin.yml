@@ -5,6 +5,11 @@ services:
     container_name: jellyfin
 #    user: uid:gid
 #    network_mode: 'host'
+
+#  Remove the 2 comments below to expose the jellyfin container ports to your host computer, to be able to reach it from http://localhost:8096
+#    ports:
+#      - 8096:8096
+
     volumes:
       - ./config:/config
       - ./cache:/cache
